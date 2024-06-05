@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("api/users")
 public class UserController {
 
     @Autowired
@@ -22,7 +22,7 @@ public class UserController {
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
 
-    @PostMapping("/salvar")
+    @PostMapping
     public ResponseEntity<Void> salvarUsuario(@RequestBody CreateUserDTO createUserDto) {
         userService.salvarUsuario(createUserDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
