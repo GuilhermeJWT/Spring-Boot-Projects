@@ -28,11 +28,13 @@ public class UserAuthenticationFilter extends OncePerRequestFilter{
     private UserRepository userRepository;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
+
         if (verificaEndpointsPublicos(request)) {
             String token = recuperaToken(request);
             if (token != null) {
-                String subject = jwtTokenService.getSubjectFromToken(token);
+                String subject = jwtTokenService.pegarToken(token);
                 ModelUser modelUser = userRepository.findByEmail(subject).get();
                 ModelUserDetailsImpl modelUserDetails = new ModelUserDetailsImpl(modelUser);
                 Authentication authentication =

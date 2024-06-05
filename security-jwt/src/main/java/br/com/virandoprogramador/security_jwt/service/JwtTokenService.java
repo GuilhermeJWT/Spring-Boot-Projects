@@ -35,7 +35,7 @@ public class JwtTokenService {
         }
     }
 
-    public String getSubjectFromToken(String token) {
+    public String pegarToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret_Key);
             return JWT.require(algorithm)
