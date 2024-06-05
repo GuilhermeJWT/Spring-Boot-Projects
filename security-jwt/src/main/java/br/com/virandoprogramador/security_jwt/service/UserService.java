@@ -7,7 +7,6 @@ import br.com.virandoprogramador.security_jwt.model.ModelRole;
 import br.com.virandoprogramador.security_jwt.model.ModelUser;
 import br.com.virandoprogramador.security_jwt.model.ModelUserDetailsImpl;
 import br.com.virandoprogramador.security_jwt.repository.UserRepository;
-import br.com.virandoprogramador.security_jwt.security.JwtTokenService;
 import br.com.virandoprogramador.security_jwt.security.SecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

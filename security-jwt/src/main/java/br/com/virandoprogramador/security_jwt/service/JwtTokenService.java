@@ -1,4 +1,4 @@
-package br.com.virandoprogramador.security_jwt.security;
+package br.com.virandoprogramador.security_jwt.service;
 
 import br.com.virandoprogramador.security_jwt.model.ModelUserDetailsImpl;
 import com.auth0.jwt.JWT;

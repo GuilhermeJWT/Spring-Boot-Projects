@@ -3,6 +3,7 @@ package br.com.virandoprogramador.security_jwt.security;
 import br.com.virandoprogramador.security_jwt.model.ModelUser;
 import br.com.virandoprogramador.security_jwt.model.ModelUserDetailsImpl;
 import br.com.virandoprogramador.security_jwt.repository.UserRepository;
+import br.com.virandoprogramador.security_jwt.service.JwtTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
