@@ -1,5 +1,6 @@
 package br.com.systemsgs.picpay.dto;
 
+import br.com.systemsgs.picpay.entity.Wallet;
 import br.com.systemsgs.picpay.entity.WalletType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -24,5 +25,15 @@ public class CreateWalletDTO {
 
     @NotBlank(message = "Tipo da Carteira deve ser Informado.")
     private WalletType.Enum walletType;
+
+    public Wallet toWallet(){
+        return new Wallet(
+                fullName,
+                cpfCnpj,
+                email,
+                password,
+                walletType.get()
+        );
+    }
 
 }
