@@ -19,11 +19,28 @@ public class WalletType implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(generator = "id_gen_wallet_type",strategy = GenerationType.AUTO)
-    @SequenceGenerator(name = "id_gen_wallet_type", sequenceName = "wallet_type_seq", initialValue = 2, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "description")
     private String description;
+
+    public enum Enum {
+
+        USER(1L, "User"), // Usuario Comum
+        MERCHANT(2L, "Merchant"); // Lojista
+
+        private Long id;
+        private String description;
+
+        Enum(Long id, String description) {
+            this.id = id;
+            this.description = description;
+        }
+
+        public WalletType get(){
+            return new WalletType(id, description);
+        }
+    }
 
 }

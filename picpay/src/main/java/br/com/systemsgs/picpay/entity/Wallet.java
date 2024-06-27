@@ -22,8 +22,7 @@ public class Wallet implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(generator = "id_gen_wallet",strategy = GenerationType.AUTO)
-    @SequenceGenerator(name = "id_gen_wallet", sequenceName = "wallet_seq", initialValue = 2, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotBlank(message = "Nome deve ser Informado.")
@@ -47,7 +46,7 @@ public class Wallet implements Serializable {
     @DecimalMin(value = "0.1", message = "Informe um Valor Válido")
     @NotNull(message = "Valor deve ser Informado.")
     @Column(name = "balance")
-    private BigDecimal balance;
+    private BigDecimal balance = BigDecimal.ZERO;
 
     @ManyToOne
     @JoinColumn(name = "wallet_type_id")
