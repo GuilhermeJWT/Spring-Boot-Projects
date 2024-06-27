@@ -23,6 +23,7 @@ public class WalletType implements Serializable {
     @SequenceGenerator(name = "id_gen_wallet_type", sequenceName = "wallet_type_seq", initialValue = 2, allocationSize = 1)
     private Long id;
 
+    @Column(name = "description")
     private String description;
 
 }
