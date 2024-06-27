@@ -17,7 +17,7 @@ public class AuthorizationService {
     public boolean isAuthorized(Transfer transfer){
         var response = authorizationClient.isAuthorized();
 
-        if(!response.getStatusCode().is2xxSuccessful()){
+        if(response.getStatusCode().isError()){
             throw new AuthorizationResponseException();
         }
 
