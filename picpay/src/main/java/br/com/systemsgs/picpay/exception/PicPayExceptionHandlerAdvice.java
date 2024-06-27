@@ -30,4 +30,10 @@ public class PicPayExceptionHandlerAdvice {
         return new ApiRestErrors(camposDuplicados.getMessage());
     }
 
+    @ExceptionHandler(AuthorizationResponseException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiRestErrors authorizationResponseException(AuthorizationResponseException authorizationException){
+        return new ApiRestErrors(authorizationException.getMessage());
+    }
+
 }
