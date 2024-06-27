@@ -4,9 +4,16 @@ import br.com.systemsgs.picpay.entity.Wallet;
 import br.com.systemsgs.picpay.entity.WalletType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
 
-
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreateWalletDTO {
 
     @NotBlank(message = "Nome deve ser Informado.")
@@ -23,7 +30,6 @@ public class CreateWalletDTO {
     @NotBlank(message = "Password deve ser Informada.")
     private String password;
 
-    @NotBlank(message = "Tipo da Carteira deve ser Informado.")
     private WalletType.Enum walletType;
 
     public Wallet toWallet(){
