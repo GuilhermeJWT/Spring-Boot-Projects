@@ -11,22 +11,22 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
-@Table(name = "tb_wallet_type")
-public class WalletType implements Serializable {
+@Table(name = "tb_carteira_tipo")
+public class CarteiraTipo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "descricao")
+    private String descricao;
 
     public enum Enum {
 
-        USER(1L, "User"), // Usuario Comum
-        MERCHANT(2L, "Merchant"); // Lojista
+        USER(1L, "User"),
+        LOJISTA(2L, "Lojista");
 
         private Long id;
         private String description;
@@ -36,9 +36,8 @@ public class WalletType implements Serializable {
             this.description = description;
         }
 
-        public WalletType get(){
-            return new WalletType(id, description);
+        public CarteiraTipo get(){
+            return new CarteiraTipo(id, description);
         }
     }
-
 }

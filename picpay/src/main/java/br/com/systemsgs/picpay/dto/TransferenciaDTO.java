@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransferDTO {
+public class TransferenciaDTO {
 
     @DecimalMin(value = "0.01", message = "Valor Minimo da Transferência é 0.01.")
     @NotNull(message = "Informe um Valor da Transferência.")

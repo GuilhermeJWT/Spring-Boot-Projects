@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
 
@@ -14,8 +15,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_transfer")
-public class Transfer {
+@Table(name = "tb_transferencia")
+public class Transferencia implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -23,16 +24,16 @@ public class Transfer {
 
     @ManyToOne
     @JoinColumn(name = "wallet_sender_id")
-    private Wallet sender;
+    private Carteira sender;
 
     @ManyToOne
     @JoinColumn(name = "wallet_receiver_id")
-    private Wallet receiver;
+    private Carteira receiver;
 
     @Column(name = "value")
     private BigDecimal value;
 
-    public Transfer(Wallet sender, Wallet receiver, BigDecimal value) {
+    public Transferencia(Carteira sender, Carteira receiver, BigDecimal value) {
         this.sender = sender;
         this.receiver = receiver;
         this.value = value;

@@ -23,5 +23,4 @@ public class ApiRestErrors {
     public ApiRestErrors(String mensagemErro){
         this.erros = Arrays.asList(mensagemErro);
     }
-
 }
