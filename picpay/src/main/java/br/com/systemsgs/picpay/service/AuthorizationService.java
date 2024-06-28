@@ -1,7 +1,7 @@
 package br.com.systemsgs.picpay.service;
 
 import br.com.systemsgs.picpay.client.AuthorizationClient;
-import br.com.systemsgs.picpay.entity.Transfer;
+import br.com.systemsgs.picpay.dto.TransferDTO;
 import br.com.systemsgs.picpay.exception.AuthorizationResponseException;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ public class AuthorizationService {
         this.authorizationClient = authorizationClient;
     }
 
-    public boolean isAuthorized(Transfer transfer){
+    public boolean isAuthorized(TransferDTO transfer){
         var response = authorizationClient.isAuthorized();
 
         if(response.getStatusCode().isError()){

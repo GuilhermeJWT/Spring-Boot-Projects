@@ -49,4 +49,20 @@ public class Wallet implements Serializable {
         this.password = password;
         this.walletType = walletType;
     }
+
+    public boolean isTransferAllowedForWalletType() {
+        return this.walletType.equals(WalletType.Enum.USER.get());
+    }
+
+    public boolean isValidaSaldoPagador(BigDecimal value) {
+        return this.balance.doubleValue() > value.doubleValue();
+    }
+
+    public void debitar(BigDecimal value) {
+        this.balance = this.balance.subtract(value);
+    }
+
+    public void creditar(BigDecimal value) {
+        this.balance = this.balance.add(value);
+    }
 }

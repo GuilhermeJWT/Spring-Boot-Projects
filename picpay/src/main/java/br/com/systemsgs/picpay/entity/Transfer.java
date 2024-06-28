@@ -32,4 +32,9 @@ public class Transfer {
     @Column(name = "value")
     private BigDecimal value;
 
+    public Transfer(Wallet sender, Wallet receiver, BigDecimal value) {
+        this.sender = sender;
+        this.receiver = receiver;
+        this.value = value;
+    }
 }
