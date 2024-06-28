@@ -1,7 +1,6 @@
 package br.com.systemsgs.picpay.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -34,6 +33,30 @@ public class PicPayExceptionHandlerAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiRestErrors authorizationResponseException(AuthorizationResponseException authorizationException){
         return new ApiRestErrors(authorizationException.getMessage());
+    }
+
+    @ExceptionHandler(WalletNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiRestErrors walletNotFoundException(WalletNotFoundException walletNotFoundException){
+        return new ApiRestErrors(walletNotFoundException.getMessage());
+    }
+
+    @ExceptionHandler(TransferNotAllowedForWalletTypeException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ApiRestErrors transferNotAllowedForWalletTypeException(TransferNotAllowedForWalletTypeException transferNotAllowed){
+        return new ApiRestErrors(transferNotAllowed.getMessage());
+    }
+
+    @ExceptionHandler(SaldoInsuficienteException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ApiRestErrors saldoInsuficienteException(SaldoInsuficienteException saldoInsuficienteException){
+        return new ApiRestErrors(saldoInsuficienteException.getMessage());
+    }
+
+    @ExceptionHandler(TransferenciaNaoAutorizadaException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ApiRestErrors transferenciaNaoAutorizadaException(TransferenciaNaoAutorizadaException transferenciaNaoAutorizadaException){
+        return new ApiRestErrors(transferenciaNaoAutorizadaException.getMessage());
     }
 
 }
