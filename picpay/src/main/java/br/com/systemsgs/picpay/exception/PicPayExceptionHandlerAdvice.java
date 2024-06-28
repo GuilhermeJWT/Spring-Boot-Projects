@@ -25,38 +25,50 @@ public class PicPayExceptionHandlerAdvice {
 
     @ExceptionHandler(CamposCpfEmailDuplicadosException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ApiRestErrors clienteNaoEncontradoException(CamposCpfEmailDuplicadosException camposDuplicados){
-        return new ApiRestErrors(camposDuplicados.getMessage());
+    public ApiRestErrors camposDuplicados(CamposCpfEmailDuplicadosException camposDuplicados){
+        return new ApiRestErrors(Instant.now(), HttpStatus.UNPROCESSABLE_ENTITY , List.of(camposDuplicados.getMessage()));
     }
 
     @ExceptionHandler(AuthorizationResponseException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiRestErrors authorizationResponseException(AuthorizationResponseException authorizationException){
-        return new ApiRestErrors(authorizationException.getMessage());
+        return new ApiRestErrors(Instant.now(),
+                HttpStatus.INTERNAL_SERVER_ERROR ,
+                List.of(authorizationException.getMessage()));
     }
 
-    @ExceptionHandler(WalletNotFoundException.class)
+    @ExceptionHandler(CarteiraNaoEncontradaException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiRestErrors walletNotFoundException(WalletNotFoundException walletNotFoundException){
-        return new ApiRestErrors(walletNotFoundException.getMessage());
+    public ApiRestErrors walletNotFoundException(CarteiraNaoEncontradaException carteiraNaoEncontradaException){
+        return new ApiRestErrors(Instant.now(),
+                HttpStatus.NOT_FOUND,
+                List.of(carteiraNaoEncontradaException.getMessage()));
     }
 
-    @ExceptionHandler(TransferNotAllowedForWalletTypeException.class)
+    @ExceptionHandler(TransferenciaNaoPermitidaTipoCarteiraException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ApiRestErrors transferNotAllowedForWalletTypeException(TransferNotAllowedForWalletTypeException transferNotAllowed){
-        return new ApiRestErrors(transferNotAllowed.getMessage());
+    public ApiRestErrors transferNotAllowedForWalletTypeException(TransferenciaNaoPermitidaTipoCarteiraException transferNotAllowed){
+        return new ApiRestErrors(Instant.now(),
+                HttpStatus.UNPROCESSABLE_ENTITY,
+                List.of(transferNotAllowed.getMessage()));
     }
 
     @ExceptionHandler(SaldoInsuficienteException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ApiRestErrors saldoInsuficienteException(SaldoInsuficienteException saldoInsuficienteException){
-        return new ApiRestErrors(saldoInsuficienteException.getMessage());
+        return new ApiRestErrors(
+                Instant.now(),
+                HttpStatus.UNPROCESSABLE_ENTITY,
+                List.of(saldoInsuficienteException.getMessage()));
     }
 
     @ExceptionHandler(TransferenciaNaoAutorizadaException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ApiRestErrors transferenciaNaoAutorizadaException(TransferenciaNaoAutorizadaException transferenciaNaoAutorizadaException){
-        return new ApiRestErrors(transferenciaNaoAutorizadaException.getMessage());
+        return new ApiRestErrors(
+                Instant.now(),
+                HttpStatus.UNPROCESSABLE_ENTITY,
+                List.of(transferenciaNaoAutorizadaException.getMessage()));
     }
 
 }
