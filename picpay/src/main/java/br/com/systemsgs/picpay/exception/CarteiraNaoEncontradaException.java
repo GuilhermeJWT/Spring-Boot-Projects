@@ -4,8 +4,8 @@ public class CarteiraNaoEncontradaException extends RuntimeException{
 
     private static final long serialVersionUID = 1L;
 
-    public CarteiraNaoEncontradaException(Long payer){
-        super("Wallet não Encontrado:" + payer);
+    public CarteiraNaoEncontradaException(Long pagador){
+        super("Carteira não Encontrada:" + pagador);
     }
 
 }

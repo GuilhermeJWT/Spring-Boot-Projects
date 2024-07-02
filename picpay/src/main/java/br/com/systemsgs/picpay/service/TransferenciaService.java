@@ -43,18 +43,18 @@ public class TransferenciaService {
     @Transactional
     public Transferencia transfer(TransferenciaDTO transferenciaDTO) {
 
-        var pagador = walletRepository.findById(transferenciaDTO.getPayer())
-                .orElseThrow(() -> new CarteiraNaoEncontradaException(transferenciaDTO.getPayer()));
+        var pagador = walletRepository.findById(transferenciaDTO.getPagador())
+                .orElseThrow(() -> new CarteiraNaoEncontradaException(transferenciaDTO.getPagador()));
 
-        var recebedor = walletRepository.findById(transferenciaDTO.getPayee())
-                .orElseThrow(() -> new CarteiraNaoEncontradaException(transferenciaDTO.getPayee()));
+        var recebedor = walletRepository.findById(transferenciaDTO.getRecebedor())
+                .orElseThrow(() -> new CarteiraNaoEncontradaException(transferenciaDTO.getRecebedor()));
 
         validateTransfer(transferenciaDTO, pagador);
 
-        pagador.debitar(transferenciaDTO.getValue());
-        recebedor.creditar(transferenciaDTO.getValue());
+        pagador.debitar(transferenciaDTO.getValor());
+        recebedor.creditar(transferenciaDTO.getValor());
 
-        var transfer = new Transferencia(pagador, recebedor, transferenciaDTO.getValue());
+        var transfer = new Transferencia(pagador, recebedor, transferenciaDTO.getValor());
 
         walletRepository.save(pagador);
         walletRepository.save(recebedor);
@@ -76,7 +76,7 @@ public class TransferenciaService {
             throw new TransferenciaNaoPermitidaTipoCarteiraException();
         }
 
-        if(!pagador.isValidaSaldoPagador(transferenciaDTO.getValue())){
+        if(!pagador.isValidaSaldoPagador(transferenciaDTO.getValor())){
             throw new SaldoInsuficienteException();
         }
 

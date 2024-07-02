@@ -17,13 +17,12 @@ public class TransferenciaDTO {
 
     @DecimalMin(value = "0.01", message = "Valor Minimo da Transferência é 0.01.")
     @NotNull(message = "Informe um Valor da Transferência.")
-    private BigDecimal value;
+    private BigDecimal valor;
 
 
     @NotNull(message = "Informe o Pagador da Transferência.")
-    private Long payer; //pagador
+    private Long pagador;
 
     @NotNull(message = "Informe um Benefeciário para a Transferência.")
-    private Long payee; //recebedor
-
+    private Long recebedor;
 }

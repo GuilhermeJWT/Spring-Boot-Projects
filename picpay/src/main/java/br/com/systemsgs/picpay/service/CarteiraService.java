@@ -3,8 +3,11 @@ package br.com.systemsgs.picpay.service;
 import br.com.systemsgs.picpay.dto.CreateCarteiraDTO;
 import br.com.systemsgs.picpay.entity.Carteira;
 import br.com.systemsgs.picpay.exception.CamposCpfEmailDuplicadosException;
+import br.com.systemsgs.picpay.exception.CarteiraNaoEncontradaException;
 import br.com.systemsgs.picpay.repository.CarteiraRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class CarteiraService {
@@ -25,4 +28,12 @@ public class CarteiraService {
 
         return carteiraRepository.save(createCarteiraDTO.toCarteira());
     }
+
+    public Optional<Carteira> pesquisaPorId(Long id){
+        Optional<Carteira> carteira = Optional.ofNullable(carteiraRepository.findById(id)
+                .orElseThrow(() -> new CarteiraNaoEncontradaException(id)));
+
+        return carteira;
+    }
+
 }

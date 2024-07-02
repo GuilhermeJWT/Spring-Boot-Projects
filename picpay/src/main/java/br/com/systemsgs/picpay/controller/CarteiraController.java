@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping(value = "api/v1/carteira")
@@ -22,8 +25,11 @@ public class CarteiraController {
 
     @PostMapping(value = "/salvar")
     public ResponseEntity<Carteira> criarCarteira(@RequestBody @Valid CreateCarteiraDTO createCarteiraDTO){
-        var wallet = carteiraService.criarCarteira(createCarteiraDTO);
+        var carteira = carteiraService.criarCarteira(createCarteiraDTO);
 
-        return ResponseEntity.ok(wallet);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
+                buildAndExpand(carteiraService.pesquisaPorId(carteira.getId())).toUri();
+
+        return ResponseEntity.created(uri).body(carteira);
     }
 }
