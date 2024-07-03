@@ -57,6 +57,29 @@ class TransferenciaControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
+    @DisplayName("Deve retornar uma lista de Transações - 200")
+    @Test
+    void deveRetornaListaTransacoes(){
+        when(transferenciaService.listarTransasoes()).thenReturn(Arrays.asList(transferenciaResponseDTO));
+
+        ResponseEntity<List<TransferenciaResponseDTO>> response = transferenciaController.listaTransacoes();
+
+        assertNotNull(response);
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(ResponseEntity.class, response.getClass());
+
+        assertEquals(TransferenciaResponseDTO.class, response.getBody().get(0).getClass());
+
+        assertEquals(getDados.dadosTransferenciaResponse().getIdTransferencia(), response.getBody().get(0).getIdTransferencia());
+        assertEquals(getDados.dadosTransferenciaResponse().getIdPagador(), response.getBody().get(0).getIdPagador());
+        assertEquals(getDados.dadosTransferenciaResponse().getNomePagador(), response.getBody().get(0).getNomePagador());
+        assertEquals(getDados.dadosTransferenciaResponse().getIdBeneficiario(), response.getBody().get(0).getIdBeneficiario());
+        assertEquals(getDados.dadosTransferenciaResponse().getNomeBeneficiario(), response.getBody().get(0).getNomeBeneficiario());
+        assertEquals(getDados.dadosTransferenciaResponse().getDataTransacao(), response.getBody().get(0).getDataTransacao());
+        assertEquals(getDados.dadosTransferenciaResponse().getValorTransferencia(), response.getBody().get(0).getValorTransferencia());
+    }
+
     private void startTransferencia(){
         transferencia = new Transferencia(
           getDados.dadosTransferencia().getId(),
