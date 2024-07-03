@@ -1,10 +1,7 @@
 package br.com.systemsgs.picpay.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -15,6 +12,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_carteira")
+@ToString
 public class Carteira implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,14 +39,6 @@ public class Carteira implements Serializable {
     @ManyToOne
     @JoinColumn(name = "carteira_tipo_id")
     private CarteiraTipo carteiraTipo;
-
-    public Carteira(String fullName, String cpfCnpj, String email, String password, CarteiraTipo carteiraTipo) {
-        this.fullName = fullName;
-        this.cpfCnpj = cpfCnpj;
-        this.email = email;
-        this.password = password;
-        this.carteiraTipo = carteiraTipo;
-    }
 
     public boolean isTransferAllowedForWalletType() {
         return this.carteiraTipo.equals(CarteiraTipo.Enum.USER.get());

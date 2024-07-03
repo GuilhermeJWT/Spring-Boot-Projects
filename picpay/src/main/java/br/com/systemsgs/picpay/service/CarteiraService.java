@@ -5,6 +5,8 @@ import br.com.systemsgs.picpay.entity.Carteira;
 import br.com.systemsgs.picpay.exception.CamposCpfEmailDuplicadosException;
 import br.com.systemsgs.picpay.exception.CarteiraNaoEncontradaException;
 import br.com.systemsgs.picpay.repository.CarteiraRepository;
+import jakarta.transaction.Transactional;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,20 +15,22 @@ import java.util.Optional;
 public class CarteiraService {
 
     private final CarteiraRepository carteiraRepository;
+    private final ModelMapper mapper;
 
-    public CarteiraService(CarteiraRepository carteiraRepository) {
+    public CarteiraService(CarteiraRepository carteiraRepository, ModelMapper mapper) {
         this.carteiraRepository = carteiraRepository;
+        this.mapper = mapper;
     }
 
+    @Transactional
     public Carteira criarCarteira(CreateCarteiraDTO createCarteiraDTO) {
+        validaCarteira(createCarteiraDTO);
+        Carteira carteiraConvertida = mapper.map(createCarteiraDTO, Carteira.class);
+        carteiraConvertida.setCarteiraTipo(createCarteiraDTO.getCarteiraTipo().get());
 
-        var walletdb = carteiraRepository.findByCpfCnpjOrEmail(createCarteiraDTO.getCpfCnpj(), createCarteiraDTO.getEmail());
+        var carteiraSalvar = carteiraRepository.save(carteiraConvertida);
 
-        if(walletdb.isPresent()){
-            throw new CamposCpfEmailDuplicadosException();
-        }
-
-        return carteiraRepository.save(createCarteiraDTO.toCarteira());
+        return carteiraSalvar;
     }
 
     public Optional<Carteira> pesquisaPorId(Long id){
@@ -34,6 +38,16 @@ public class CarteiraService {
                 .orElseThrow(() -> new CarteiraNaoEncontradaException(id)));
 
         return carteira;
+    }
+
+    private void validaCarteira(CreateCarteiraDTO createCarteiraDTO){
+        var carteira = carteiraRepository.
+                findByCpfCnpjOrEmail(createCarteiraDTO.getCpfCnpj(),
+                        createCarteiraDTO.getEmail());
+
+        if(carteira.isPresent()){
+            throw new CamposCpfEmailDuplicadosException();
+        }
     }
 
 }
