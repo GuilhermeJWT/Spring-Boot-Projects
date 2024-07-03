@@ -48,7 +48,7 @@ public class TransferenciaService {
      */
 
     @Transactional
-    public Transferencia transfer(TransferenciaDTO transferenciaDTO) {
+    public Transferencia realizarTransferencia(TransferenciaDTO transferenciaDTO) {
 
         var pagador = carteiraRepository.findById(transferenciaDTO.getPagador())
                 .orElseThrow(() -> new CarteiraNaoEncontradaException(transferenciaDTO.getPagador()));

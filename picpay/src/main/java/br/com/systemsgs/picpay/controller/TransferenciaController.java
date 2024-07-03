@@ -22,7 +22,7 @@ public class TransferenciaController {
 
     @PostMapping
     public ResponseEntity<Transferencia> trasferencia(@RequestBody @Valid TransferenciaDTO transferenciaDTO){
-        var response = transferenciaService.transfer(transferenciaDTO);
+        var response = transferenciaService.realizarTransferencia(transferenciaDTO);
 
         return ResponseEntity.ok(response);
     }

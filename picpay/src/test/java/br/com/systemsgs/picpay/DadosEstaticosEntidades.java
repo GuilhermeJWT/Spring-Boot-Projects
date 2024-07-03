@@ -46,17 +46,19 @@ public class DadosEstaticosEntidades {
         transferenciaDTO.setPagador(Long.valueOf(2));
         transferenciaDTO.setRecebedor(Long.valueOf(1));
         transferenciaDTO.setValor(BigDecimal.valueOf(50.0));
+
+        return transferenciaDTO;
     }
 
     public TransferenciaResponseDTO dadosTransferenciaResponse(){
         TransferenciaResponseDTO transferenciaResponseDTO = new TransferenciaResponseDTO();
 
-        transferenciaResponseDTO.setIdTransferencia(UUID.randomUUID());
+        transferenciaResponseDTO.setIdTransferencia(UUID.fromString("e919cd1f-8a05-4772-beb6-867180af36f4"));
         transferenciaResponseDTO.setIdPagador(Long.valueOf(1));
         transferenciaResponseDTO.setNomePagador("Guilherme - Pagador");
         transferenciaResponseDTO.setIdBeneficiario(Long.valueOf(2));
         transferenciaResponseDTO.setNomeBeneficiario("Guilherme - Beneficiario");
-        transferenciaResponseDTO.setDataTransacao(Instant.now());
+        transferenciaResponseDTO.setDataTransacao(Instant.parse("2024-07-03T22:12:50.515676932Z"));
         transferenciaResponseDTO.setValorTransferencia(BigDecimal.valueOf(50.0));
 
         return transferenciaResponseDTO;
