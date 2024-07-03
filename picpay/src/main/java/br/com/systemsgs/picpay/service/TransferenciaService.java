@@ -1,6 +1,7 @@
 package br.com.systemsgs.picpay.service;
 
 import br.com.systemsgs.picpay.dto.TransferenciaDTO;
+import br.com.systemsgs.picpay.dto.TransferenciaResponseDTO;
 import br.com.systemsgs.picpay.entity.Transferencia;
 import br.com.systemsgs.picpay.entity.Carteira;
 import br.com.systemsgs.picpay.exception.CarteiraNaoEncontradaException;
@@ -9,9 +10,12 @@ import br.com.systemsgs.picpay.repository.CarteiraRepository;
 import br.com.systemsgs.picpay.exception.TransferenciaNaoPermitidaTipoCarteiraException;
 import br.com.systemsgs.picpay.exception.SaldoInsuficienteException;
 import br.com.systemsgs.picpay.exception.TransferenciaNaoAutorizadaException;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -21,16 +25,19 @@ public class TransferenciaService {
     private final NotificationService notificationService;
     private final TransferenciaRepository transferenciaRepository;
     private final CarteiraRepository carteiraRepository;
+    private final ModelMapper mapper;
 
     public TransferenciaService(AuthorizationService authorizationService,
                                 NotificationService notificationService,
                                 TransferenciaRepository transferenciaRepository,
-                                CarteiraRepository carteiraRepository) {
+                                CarteiraRepository carteiraRepository,
+                                ModelMapper mapper) {
 
         this.authorizationService = authorizationService;
         this.notificationService = notificationService;
         this.transferenciaRepository = transferenciaRepository;
         this.carteiraRepository = carteiraRepository;
+        this.mapper = mapper;
     }
 
 
@@ -63,6 +70,29 @@ public class TransferenciaService {
         CompletableFuture.runAsync(() -> notificationService.sendNotification(transferResult));
 
         return transferResult;
+    }
+
+    /***
+     * Método para retornar todas as Transações
+     * @return List<TransferenciaResponseDTO>
+     */
+    public List<TransferenciaResponseDTO> listarTransasoes() {
+        var listaTransaferencia = transferenciaRepository.findAll();
+        List<TransferenciaResponseDTO> listaTransferenciaResponse = new ArrayList<>();
+
+        for (Transferencia transferencia : listaTransaferencia) {
+            TransferenciaResponseDTO transferenciaResponseDTO = new TransferenciaResponseDTO();
+            transferenciaResponseDTO.setIdTransferencia(transferencia.getId());
+            transferenciaResponseDTO.setIdPagador(transferencia.getPagador().getId());
+            transferenciaResponseDTO.setNomePagador(transferencia.getPagador().getFullName());
+            transferenciaResponseDTO.setIdBeneficiario(transferencia.getRecebedor().getId());
+            transferenciaResponseDTO.setNomeBeneficiario(transferencia.getRecebedor().getFullName());
+            transferenciaResponseDTO.setValorTransferencia(transferencia.getValor());
+            transferenciaResponseDTO.setDataTransacao(transferencia.getDataTransacao());
+
+            listaTransferenciaResponse.add(transferenciaResponseDTO);
+        }
+        return listaTransferenciaResponse;
     }
 
     /***
