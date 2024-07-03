@@ -5,9 +5,9 @@ import br.com.systemsgs.picpay.entity.Carteira;
 import br.com.systemsgs.picpay.exception.CamposCpfEmailDuplicadosException;
 import br.com.systemsgs.picpay.exception.CarteiraNaoEncontradaException;
 import br.com.systemsgs.picpay.repository.CarteiraRepository;
-import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -25,6 +25,7 @@ public class CarteiraService {
     @Transactional
     public Carteira criarCarteira(CreateCarteiraDTO createCarteiraDTO) {
         validaCarteira(createCarteiraDTO);
+
         Carteira carteiraConvertida = mapper.map(createCarteiraDTO, Carteira.class);
         carteiraConvertida.setCarteiraTipo(createCarteiraDTO.getCarteiraTipo().get());
 
@@ -49,5 +50,4 @@ public class CarteiraService {
             throw new CamposCpfEmailDuplicadosException();
         }
     }
-
 }

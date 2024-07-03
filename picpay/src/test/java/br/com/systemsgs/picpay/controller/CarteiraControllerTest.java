@@ -44,7 +44,7 @@ class CarteiraControllerTest {
         startCarteira();
     }
 
-    @DisplayName("Deve salvar uma Carteira e retorna 201 Created")
+    @DisplayName("Deve salvar uma Carteira e retorna 200")
     @Test
     void deveSalvarCarteiraComSucesso(){
         when(carteiraService.criarCarteira(carteiraDTO)).thenReturn(carteira);

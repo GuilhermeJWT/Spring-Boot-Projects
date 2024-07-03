@@ -9,8 +9,8 @@ import br.com.systemsgs.picpay.repository.CarteiraRepository;
 import br.com.systemsgs.picpay.exception.TransferenciaNaoPermitidaTipoCarteiraException;
 import br.com.systemsgs.picpay.exception.SaldoInsuficienteException;
 import br.com.systemsgs.picpay.exception.TransferenciaNaoAutorizadaException;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -20,17 +20,17 @@ public class TransferenciaService {
     private final AuthorizationService authorizationService;
     private final NotificationService notificationService;
     private final TransferenciaRepository transferenciaRepository;
-    private final CarteiraRepository walletRepository;
+    private final CarteiraRepository carteiraRepository;
 
     public TransferenciaService(AuthorizationService authorizationService,
                                 NotificationService notificationService,
                                 TransferenciaRepository transferenciaRepository,
-                                CarteiraRepository walletRepository) {
+                                CarteiraRepository carteiraRepository) {
 
         this.authorizationService = authorizationService;
         this.notificationService = notificationService;
         this.transferenciaRepository = transferenciaRepository;
-        this.walletRepository = walletRepository;
+        this.carteiraRepository = carteiraRepository;
     }
 
 
@@ -43,21 +43,21 @@ public class TransferenciaService {
     @Transactional
     public Transferencia transfer(TransferenciaDTO transferenciaDTO) {
 
-        var pagador = walletRepository.findById(transferenciaDTO.getPagador())
+        var pagador = carteiraRepository.findById(transferenciaDTO.getPagador())
                 .orElseThrow(() -> new CarteiraNaoEncontradaException(transferenciaDTO.getPagador()));
 
-        var recebedor = walletRepository.findById(transferenciaDTO.getRecebedor())
+        var recebedor = carteiraRepository.findById(transferenciaDTO.getRecebedor())
                 .orElseThrow(() -> new CarteiraNaoEncontradaException(transferenciaDTO.getRecebedor()));
 
-        validateTransfer(transferenciaDTO, pagador);
+        validarTransferencia(transferenciaDTO, pagador);
 
         pagador.debitar(transferenciaDTO.getValor());
         recebedor.creditar(transferenciaDTO.getValor());
 
         var transfer = new Transferencia(pagador, recebedor, transferenciaDTO.getValor());
 
-        walletRepository.save(pagador);
-        walletRepository.save(recebedor);
+        carteiraRepository.save(pagador);
+        carteiraRepository.save(recebedor);
         var transferResult = transferenciaRepository.save(transfer);
 
         CompletableFuture.runAsync(() -> notificationService.sendNotification(transferResult));
@@ -70,7 +70,7 @@ public class TransferenciaService {
      * @param transferenciaDTO
      * @param
      */
-    private void validateTransfer(TransferenciaDTO transferenciaDTO, Carteira pagador) {
+    private void validarTransferencia (TransferenciaDTO transferenciaDTO, Carteira pagador) {
 
         if(!pagador.isTransferAllowedForWalletType()){
             throw new TransferenciaNaoPermitidaTipoCarteiraException();

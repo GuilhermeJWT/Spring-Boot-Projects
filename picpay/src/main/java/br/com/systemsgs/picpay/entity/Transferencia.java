@@ -5,9 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SourceType;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.UUID;
 
 @Getter
@@ -23,19 +26,23 @@ public class Transferencia implements Serializable {
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "wallet_sender_id")
-    private Carteira sender;
+    @JoinColumn(name = "carteira_pagador_id")
+    private Carteira pagador;
 
     @ManyToOne
-    @JoinColumn(name = "wallet_receiver_id")
-    private Carteira receiver;
+    @JoinColumn(name = "carteiro_recebedor_id")
+    private Carteira recebedor;
 
-    @Column(name = "value")
-    private BigDecimal value;
+    @Column(name = "valor")
+    private BigDecimal valor;
 
-    public Transferencia(Carteira sender, Carteira receiver, BigDecimal value) {
-        this.sender = sender;
-        this.receiver = receiver;
-        this.value = value;
+    @CreationTimestamp(source = SourceType.DB)
+    @Column(name = "data_transacao")
+    private Instant dataTransacao;
+
+    public Transferencia(Carteira pagador, Carteira recebedor, BigDecimal valor) {
+        this.pagador = pagador;
+        this.recebedor = recebedor;
+        this.valor = valor;
     }
 }

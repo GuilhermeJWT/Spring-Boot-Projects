@@ -19,7 +19,6 @@ public class TransferenciaDTO {
     @NotNull(message = "Informe um Valor da Transferência.")
     private BigDecimal valor;
 
-
     @NotNull(message = "Informe o Pagador da Transferência.")
     private Long pagador;
 
