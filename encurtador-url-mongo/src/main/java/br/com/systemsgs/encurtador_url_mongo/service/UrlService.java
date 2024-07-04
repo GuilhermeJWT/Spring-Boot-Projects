@@ -8,6 +8,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class UrlService {
@@ -30,5 +31,10 @@ public class UrlService {
         UrlResponse response = new UrlResponse(id);
 
         return response;
+    }
+
+    public Optional<ModelUrl> redirecionaURL(String id) {
+        var pesquisaUrl = urlRepository.findById(id);
+        return pesquisaUrl;
     }
 }
