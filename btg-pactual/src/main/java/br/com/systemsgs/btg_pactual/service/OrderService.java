@@ -1,9 +1,12 @@
 package br.com.systemsgs.btg_pactual.service;
 
 import br.com.systemsgs.btg_pactual.dto.OrderEventoDTO;
+import br.com.systemsgs.btg_pactual.dto.OrderResponse;
 import br.com.systemsgs.btg_pactual.model.ModelOrder;
 import br.com.systemsgs.btg_pactual.model.ModelOrderItens;
 import br.com.systemsgs.btg_pactual.repository.OrderRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -33,6 +36,13 @@ public class OrderService {
                 .toList());
 
         orderRepository.save(modelOrder);
+    }
+
+    public Page<OrderResponse> pesquisaClientePeloId(Long clienteId, PageRequest pageRequest){
+        var modelOrders =  orderRepository.findAllByClienteId(clienteId, pageRequest);
+        var orderConvertida = modelOrders.map(OrderResponse::converteOrder);
+
+        return orderConvertida;
     }
 
     /*Multiplicando o Preço com a Quantidade para gerar o Valor Total do Pedido - Caso não tenha retorna 0*/
