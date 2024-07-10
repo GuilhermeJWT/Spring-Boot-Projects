@@ -1,0 +1,52 @@
+{
+	"info": {
+		"_postman_id": "6db609a7-8d63-4cf9-8447-313373399162",
+		"name": "Spring Projects",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "14886998"
+	},
+	"item": [
+		{
+			"name": "AWS S3 - Spring Boot",
+			"item": [
+				{
+					"name": "Upload S3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": "localhost:8080/api/files/upload"
+					},
+					"response": []
+				},
+				{
+					"name": "Download do Arquivo por nome",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/api/files/download/1720620529696_docker-compose.yml"
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar arquivo pelo nome",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "localhost:8080/api/files/delete/1720620529696_docker-compose.yml"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
