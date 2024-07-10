@@ -1,0 +1,24 @@
+server:
+  port: 8080
+cloud:
+  aws:
+    credentials:
+      access-key: #Criar um Usuário IAM - Adicionar a permissão: AmazonS3FullAccess
+      secret-key: #Baixar o arquivo CSV com login e senha e colocar aqui
+    region:
+      static: us-east-1
+    stack:
+      auto: false
+
+application:
+  bucket:
+    name: systemsgs-bucket-s3
+
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2MB
+      max-file-size: 5MB
+      max-request-size: 10MB
