@@ -1,4 +1,3 @@
 package br.com.systemsgs.clean_architecture.controllers;
 
-public class CreateUserResponse {
-}
+public record CreateUserResponse(String nome, String email) {}

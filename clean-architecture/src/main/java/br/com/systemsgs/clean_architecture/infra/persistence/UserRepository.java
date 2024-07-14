@@ -1,4 +1,5 @@
 package br.com.systemsgs.clean_architecture.infra.persistence;
 
-public interface UserRepository {
-}
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<UserEntity, Long> {}
